@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import Map from './Components/Map';
+import React from 'react';
+import SidePanel from './Components/SidePanel';
+import './App.css'
+
+const apikey = 'RkXF6LLDJAR4VdPTjO7latfWKcEFWg-kkNemQ7IO5xc'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <SidePanel/>
+      <Map apikey={apikey} />
     </div>
   );
-}
+};
 
 export default App;
+
