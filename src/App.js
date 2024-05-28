@@ -1,18 +1,14 @@
-import Map from './Components/Map';
 import React from 'react';
-import SidePanel from './Components/SidePanel';
-import './App.css'
+import './App.css';
+import HomePage from './Components/HomePage';
 
-const apikey = 'RkXF6LLDJAR4VdPTjO7latfWKcEFWg-kkNemQ7IO5xc'
 
 function App() {
   return (
     <div className='App'>
-      <SidePanel/>
-      <Map apikey={apikey} />
+      <HomePage />
     </div>
   );
-};
+}
 
 export default App;
-
