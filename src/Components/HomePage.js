@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import SidePanel from "./SidePanel";
 import Map from "./Map";
 import { useGeolocated } from "react-geolocated";
