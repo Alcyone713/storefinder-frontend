@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "http://localhost:5454/api/stores";
+const API_URL = "http://localhost:5454/stores";
 
 export const fetchStores = async () => {
   try {

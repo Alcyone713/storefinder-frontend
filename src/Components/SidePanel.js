@@ -1,9 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import image from "./image.png";
 import SearchResult from "./SearchResult";
 
-export default function SidePanel(props) {
-  const { list, onClickHandler } = props;
+
+
+export default function SidePanel({ list, onClickHandler }) {
+  const [searchTerm, setSearchTerm]= useState("");
+  const [searchCategory, setSearchCategory] = useState("name");
+  if (!list || list.length === 0) {
+    return <div>No stores available</div>;
+  }
+
+  const handleSearch = (event) =>{
+    setSearchTerm(event.target.value);
+  }
+  const handleCategoryChange = (event) => {
+    setSearchCategory(event.target.value);
+  };
+
+  const filterStores = () => {
+    return list.filter((store) => {
+      if (searchCategory === "name") {
+        return store.name.toLowerCase().includes(searchTerm.toLowerCase());
+      } else if (searchCategory === "category") {
+        return store.categories.some((category) =>
+          category.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      } else if (searchCategory === "product") {
+        return store.products.some((product) =>
+          product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
+      return false;
+    });
+  };
+  const filteredList = filterStores();
 
   return (
     <div className="sidepanel" style={styles.sidepanel}>
@@ -12,7 +43,7 @@ export default function SidePanel(props) {
         <h2>Storefinder</h2>
       </div>
       <div className="search" style={styles.search}>
-        <select style={styles.dropdown}>
+        <select style={styles.dropdown} onChange={handleCategoryChange} value={searchCategory}>
           <option value="category">Category</option>
           <option value="product">Product</option>
           <option value="name">Name</option>
@@ -21,10 +52,12 @@ export default function SidePanel(props) {
           type="text"
           placeholder="Search for stores"
           style={styles.searchInput}
+          value={searchTerm}
+          onChange={(handleSearch)}
         />
       </div>
       <div className="searchResults" style={styles.searchresults}>
-        {list.map((restaurant, index) => (
+        {filteredList.map((restaurant, index) => (
           <SearchResult
             key={index}
             data={restaurant}

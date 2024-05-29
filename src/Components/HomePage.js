@@ -40,6 +40,7 @@ function HomePage() {
       try {
         const storeData = await fetchStores();
         setStores(storeData);
+        console.log(storeData);
       } catch (err) {
         setError(err);
       } finally {
@@ -51,7 +52,7 @@ function HomePage() {
   }, []);
 
   const onClickHandler = (location) => {
-    setRestaurantPosition(location);
+    setRestaurantPosition({ lat: location.latitude, lng: location.longitude });
   };
 
   if (loading) return <div>Loading...</div>;
