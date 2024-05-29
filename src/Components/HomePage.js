@@ -21,7 +21,7 @@ function HomePage() {
           console.log('2');
           setUserPosition({ lat: 28.733255, lng: 77.109987 });
         } else if (coords) {
-          console.log(3);
+          console.log('3');
           setUserPosition({ lat: coords.latitude, lng: coords.longitude });
         }
       }, [coords, isGeolocationAvailable, isGeolocationEnabled]);
