@@ -2,7 +2,9 @@ import React from "react";
 import image from "./image.png";
 import SearchResult from "./SearchResult";
 
-export default function SidePanel({ list, onClickHandler }) {
+export default function SidePanel(props) {
+  const { list, onClickHandler } = props;
+
   return (
     <div className="sidepanel" style={styles.sidepanel}>
       <div className="navbar" style={styles.navbar}>
@@ -23,7 +25,11 @@ export default function SidePanel({ list, onClickHandler }) {
       </div>
       <div className="searchResults" style={styles.searchresults}>
         {list.map((restaurant, index) => (
-          <SearchResult key={index} data={restaurant} onClickHandler={onClickHandler} />
+          <SearchResult
+            key={index}
+            data={restaurant}
+            onClickHandler={onClickHandler}
+          />
         ))}
       </div>
     </div>

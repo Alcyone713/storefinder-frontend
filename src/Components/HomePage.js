@@ -33,28 +33,6 @@ function HomePage() {
         }
       }, [coords, isGeolocationAvailable, isGeolocationEnabled]);
 
-  // const restaurantList = [
-  //   {
-  //     name: "The Fish Market",
-  //     location: { lat: 28.733, lng: 77.108 },
-  //     contact: "12345678",
-  //   },
-  //   {
-  //     name: "Bæjarins Beztu Pylsur",
-  //     location: { lat: 28.734, lng: 77.1097 },
-  //     contact: "12345678",
-  //   },
-  //   {
-  //     name: "Grillmarkadurinn",
-  //     location: { lat: 28.7356, lng: 77.119 },
-  //     contact: "12345678",
-  //   },
-  //   {
-  //     name: "Kol Restaurant",
-  //     location: { lat: 28.733244, lng: 77.109 },
-  //     contact: "12345678",
-  //   },
-  // ];
   const [restaurantPosition, setRestaurantPosition] = useState(null);
 
   useEffect(() => {
