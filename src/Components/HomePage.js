@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { fetchStores } from "../Api/storeApi";
 import SidePanel from "./SidePanel";
 import Map from "./Map";
 import { useGeolocated } from "react-geolocated";
 
+const apikey = "RkXF6LLDJAR4VdPTjO7latfWKcEFWg-kkNemQ7IO5xc";
+
 function HomePage() {
-  const apikey = "RkXF6LLDJAR4VdPTjO7latfWKcEFWg-kkNemQ7IO5xc";
   const [userPosition, setUserPosition] = useState({ lat: 28.733255, lng: 77.109987 });
+  const [stores, setStores] = useState([]);
+  const [loading, setLoading] = useState([]);
+  const [error, setError] = useState(null);
+
   const { coords, isGeolocationAvailable, isGeolocationEnabled } =
     useGeolocated({
       positionOptions: {
@@ -26,39 +32,56 @@ function HomePage() {
           setUserPosition({ lat: coords.latitude, lng: coords.longitude });
         }
       }, [coords, isGeolocationAvailable, isGeolocationEnabled]);
-  //const userPosition = { lat: 28.733255, lng: 77.109987 };
 
-  const restaurantList = [
-    {
-      name: "The Fish Market",
-      location: { lat: 28.733, lng: 77.108 },
-      contact: "12345678",
-    },
-    {
-      name: "Bæjarins Beztu Pylsur",
-      location: { lat: 28.734, lng: 77.1097 },
-      contact: "12345678",
-    },
-    {
-      name: "Grillmarkadurinn",
-      location: { lat: 28.7356, lng: 77.119 },
-      contact: "12345678",
-    },
-    {
-      name: "Kol Restaurant",
-      location: { lat: 28.733244, lng: 77.109 },
-      contact: "12345678",
-    },
-  ];
+  // const restaurantList = [
+  //   {
+  //     name: "The Fish Market",
+  //     location: { lat: 28.733, lng: 77.108 },
+  //     contact: "12345678",
+  //   },
+  //   {
+  //     name: "Bæjarins Beztu Pylsur",
+  //     location: { lat: 28.734, lng: 77.1097 },
+  //     contact: "12345678",
+  //   },
+  //   {
+  //     name: "Grillmarkadurinn",
+  //     location: { lat: 28.7356, lng: 77.119 },
+  //     contact: "12345678",
+  //   },
+  //   {
+  //     name: "Kol Restaurant",
+  //     location: { lat: 28.733244, lng: 77.109 },
+  //     contact: "12345678",
+  //   },
+  // ];
   const [restaurantPosition, setRestaurantPosition] = useState(null);
+
+  useEffect(() => {
+    const getStores = async () => {
+      try {
+        const storeData = await fetchStores();
+        setStores(storeData);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getStores();
+  }, []);
 
   const onClickHandler = (location) => {
     setRestaurantPosition(location);
   };
 
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <div className="Home" style={styles.home}>
-      <SidePanel list={restaurantList} onClickHandler={onClickHandler} />
+      <SidePanel list={stores} onClickHandler={onClickHandler} />
       <Map
         apikey={apikey}
         userPosition={userPosition}
