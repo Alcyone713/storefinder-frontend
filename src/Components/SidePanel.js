@@ -1,21 +1,8 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import image from "./image.png";
 import SearchResult from "./SearchResult";
 
 export default function SidePanel({ list, onClickHandler }) {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (Array.isArray(list)) {
-      setLoading(false);
-    }
-  }, [list]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (!list || list.length === 0) {
     return <div>No stores available</div>;
   }
@@ -45,11 +32,6 @@ export default function SidePanel({ list, onClickHandler }) {
     </div>
   );
 }
-
-SidePanel.propTypes = {
-  list: PropTypes.array.isRequired,
-  onClickHandler: PropTypes.func.isRequired,
-};
 
 const styles = {
   dropdown: {
