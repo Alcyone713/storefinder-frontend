@@ -1,12 +1,13 @@
+
 import React, { useState,useEffect } from "react";
 import './LoginSignup.css';
-import user_icon from '../Assests/person.png';
-import email_icon from '../../Assests/email.png'
-import password_icon from '../Assests/password.png';
-import { signupUser, loginUser } from "../../Api/authApi";
+import user_icon from '../../Assests/email.png';
+import email_icon from '../../Assests/email.png';
+import password_icon from '../../Assests/password.png';
 
 
 const LoginSignup = () => {
+
     const [action,setAction] = useState('Sign Up');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -20,39 +21,50 @@ const LoginSignup = () => {
         }
     }, []);
 
-    const handleSignup = async () => {
-        try {
+    const handleSignup = () => {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+
+        if (storedUser && storedUser.email === email) {
+            alert('User already registered. Please log in.');
+            setAction('Login');
+        } else if (username && email && password) {
             const user = { username, email, password };
-            const response = await signupUser(user);
+            localStorage.setItem('user', JSON.stringify(user));
             alert('User registered successfully!');
             setAction('Login');
-        } catch (error) {
-            alert('There was an error signing up. Please try again.');
-            console.error('Error signing up:', error);
+        } else {
+            alert('Please fill all the fields.');
         }
     };
 
-    const handleLogin = async () => {
-        try {
-            const loginRequest = { email, password };
-            const response = await loginUser(loginRequest);
-            const { token, role } = response;
+    const handleLogin = () => {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
 
-            localStorage.setItem('token', token);
-
-            if (role === 'admin') {
-                window.location.href = '/admin';
-            } else {
-                window.location.href = '/home';
+        if (storedUser) {
+            if (email === storedUser.email && password === storedUser.password) {
+                alert('Login successful!');
+                // Perform any additional actions on successful login here
+            } else if((email !== storedUser.email && password === storedUser.password) || (email === storedUser.email && password !== storedUser.password)){
+                alert('Invalid email or password.');
             }
-        } catch (error) {
-            alert('Invalid email or password.');
-            console.error('Error logging in:', error);
+            else {
+            alert('No user found. Please sign up.');
+            setAction('Signup');
+            }
         }
     };
 
     const handleAdminLogin = () => {
-        handleLogin();
+        // You can replace these credentials with actual admin credentials check logic
+        const adminEmail = 'admin@example.com';
+        const adminPassword = 'admin123';
+
+        if (email === adminEmail && password === adminPassword) {
+            alert('Admin login successful!');
+            // Redirect to admin page or perform admin-specific actions here
+        } else {
+            alert('Invalid admin credentials.');
+        }
     };
 
     const handleSignupClick = () => {
@@ -139,7 +151,7 @@ const LoginSignup = () => {
                                     onChange={(e) => setPassword(e.target.value)}/>
                             </div>
                         </div>
-                        {action==="Sign Up"?<div></div>:<><div className="forgot-password">
+                        {action==="Sign Up"?<div></div>:<><div className="forgot-password">Forgot Password? <span>Click Here!</span></div><div className="forgot-password">
                                 <span onClick={() => setAdminAction(true)}>Login as Admin</span>
                             </div></>}
                         
