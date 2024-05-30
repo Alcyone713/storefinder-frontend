@@ -1,12 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import image from "./image.png";
 import SearchResult from "./SearchResult";
+import { fetchNearestStore } from "../Api/storeApi";
 
 
-
-export default function SidePanel({ list, onClickHandler }) {
+export default function SidePanel({ list, onClickHandler, userPosition }) {
   const [searchTerm, setSearchTerm]= useState("");
   const [searchCategory, setSearchCategory] = useState("name");
+  const [nearestStores, setNearestStores] = useState([]);
+
+  useEffect(() => {
+    const fetchStores = async () => {
+      try {
+        if (userPosition) {
+          const stores = await fetchNearestStore(userPosition.lat, userPosition.lng);
+          setNearestStores(stores);
+        }
+      } catch (error) {
+        console.error("Error fetching nearest stores", error);
+      }
+    };
+    fetchStores();
+  }, [userPosition]);
+
   if (!list || list.length === 0) {
     return <div>No stores available</div>;
   }
@@ -19,7 +35,10 @@ export default function SidePanel({ list, onClickHandler }) {
   };
 
   const filterStores = () => {
-    return list.filter((store) => {
+    if(searchCategory==="Nearest Stores"){
+      return nearestStores;
+    }
+    else return list.filter((store) => {
       if (searchCategory === "name") {
         return store.name.toLowerCase().includes(searchTerm.toLowerCase());
       } else if (searchCategory === "category") {
@@ -44,6 +63,7 @@ export default function SidePanel({ list, onClickHandler }) {
       </div>
       <div className="search" style={styles.search}>
         <select style={styles.dropdown} onChange={handleCategoryChange} value={searchCategory}>
+        <option value="category">Nearest Stores</option>
           <option value="category">Category</option>
           <option value="product">Product</option>
           <option value="name">Name</option>

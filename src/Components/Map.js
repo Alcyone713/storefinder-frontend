@@ -65,14 +65,14 @@ function calculateRoute(platform, map, start, destination) {
     router.calculateRoute(routingParams, routeResponseHandler, console.error);
 }
 
-const Map = ({ apikey, userPosition, restaurantPosition }) => {
+const Map = ({ apikey, userPosition, storePosition }) => {
     const mapRef = useRef(null);
     const map = useRef(null);
     const platform = useRef(null);
 
     useEffect(() => {
-        if (restaurantPosition) {
-            calculateRoute(platform.current, map.current, userPosition, restaurantPosition);
+        if (storePosition) {
+            calculateRoute(platform.current, map.current, userPosition, storePosition);
         }        
         // Check if the map object has already been created
         if (!map.current) {
@@ -103,7 +103,7 @@ const Map = ({ apikey, userPosition, restaurantPosition }) => {
             // Set the map object to the reference
             map.current = newMap;
         }
-    }, [apikey, userPosition, restaurantPosition]);
+    }, [apikey, userPosition, storePosition]);
 
     // Return a div element to hold the map
     return <div style={{ width: "75vw", height: "100vh"}} ref={mapRef} />;

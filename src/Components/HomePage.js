@@ -33,7 +33,7 @@ function HomePage() {
         }
       }, [coords, isGeolocationAvailable, isGeolocationEnabled]);
 
-  const [restaurantPosition, setRestaurantPosition] = useState(null);
+  const [storePosition, setStorePosition] = useState(null);
 
   useEffect(() => {
     const getStores = async () => {
@@ -52,7 +52,7 @@ function HomePage() {
   }, []);
 
   const onClickHandler = (location) => {
-    setRestaurantPosition({ lat: location.latitude, lng: location.longitude });
+    setStorePosition({ lat: location.latitude, lng: location.longitude });
   };
 
   if (loading) return <div>Loading...</div>;
@@ -60,11 +60,11 @@ function HomePage() {
 
   return (
     <div className="Home" style={styles.home}>
-      <SidePanel list={stores} onClickHandler={onClickHandler} />
+      <SidePanel list={stores} onClickHandler={onClickHandler} userPosition={userPosition}/>
       <Map
         apikey={apikey}
         userPosition={userPosition}
-        restaurantPosition={restaurantPosition}
+        storePosition={storePosition}
       />
     </div>
   );
