@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchStores, addStore } from './api'; // Adjust the import path based on your project structure
+import { fetchStores, addStore } from '../Api/storeApi'; // Adjust the import path based on your project structure
 import SearchResult from './SearchResult';
 
 const AdminPage = () => {
@@ -165,7 +165,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     padding: '20px',
-    fontFamily: 'Arial, sans-serif'
+    fontFamily: 'Arial, sans-serif',
+    alignItems: 'center',
+    width: '100vw'
   },
   heading: {
     marginBottom: '20px'
@@ -203,17 +205,22 @@ const styles = {
     color: '#fff'
   },
   storesContainer: {
-    marginTop: '40px'
+    marginTop: '40px',
   },
   storeList: {
     listStyleType: 'none',
-    padding: 0
+    padding: 0,
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   storeItem: {
     marginBottom: '20px',
     padding: '10px',
     border: '1px solid #ccc',
-    borderRadius: '4px'
+    borderRadius: '4px',
+    marginLeft: '10px'
   }
 };
 

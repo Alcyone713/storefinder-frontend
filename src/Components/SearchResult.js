@@ -17,7 +17,7 @@ export default function SearchResult({ data, onClickHandler, page }) {
       <h2>{data.name}</h2>
       <h3>{data.contact}</h3>
       <div style={styles.buttons}>
-        ({page}===1 ? <h4 onClick={handleClick}>view path</h4> : null)
+        {page===1 ? <h4 onClick={handleClick}>view path</h4> : null}
         <button onClick={onOpenModal}>See details</button>
         <Modal open={open} onClose={onCloseModal} center>
           <h2>{data.name}</h2>
@@ -38,6 +38,7 @@ const styles = {
     padding: '10px',
     boxSizing: 'border-box',
     cursor: 'pointer',
+    marginLeft: '20px',
   },
   buttons: {
     display: 'flex',
