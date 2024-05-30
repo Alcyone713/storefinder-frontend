@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { fetchStores, addStore } from '../Api/storeApi' // Adjust the import path based on your project structure
+import React, { useState, useEffect } from "react";
+import { fetchStores, addStore } from "../Api/storeApi";
+import SearchResult from "./SearchResult";
 
 const AdminPage = () => {
   const [stores, setStores] = useState([]);
   const [newStore, setNewStore] = useState({
-    name: '',
-    contactDetails: '',
-    operatingHours: '',
-    description: '',
-    categories: '',
-    latitude: '',
-    longitude: '',
-    address: ''
+    name: "",
+    contactDetails: "",
+    operatingHours: "",
+    description: "",
+    categories: "",
+    latitude: "",
+    longitude: "",
+    address: "",
   });
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const AdminPage = () => {
         const fetchedStores = await fetchStores();
         setStores(fetchedStores);
       } catch (error) {
-        console.error('Error fetching stores', error);
+        console.error("Error fetching stores", error);
       }
     };
 
@@ -29,9 +30,9 @@ const AdminPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewStore(prevState => ({
+    setNewStore((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -40,27 +41,29 @@ const AdminPage = () => {
     try {
       const storeToAdd = {
         ...newStore,
-        categories: newStore.categories.split(',').map(category => category.trim()),
+        categories: newStore.categories
+          .split(",")
+          .map((category) => category.trim()),
         location: {
           latitude: parseFloat(newStore.latitude),
           longitude: parseFloat(newStore.longitude),
-          address: newStore.address
-        }
+          address: newStore.address,
+        },
       };
       await addStore(storeToAdd);
-      setStores(prevStores => [...prevStores, storeToAdd]);
+      setStores((prevStores) => [...prevStores, storeToAdd]);
       setNewStore({
-        name: '',
-        contactDetails: '',
-        operatingHours: '',
-        description: '',
-        categories: '',
-        latitude: '',
-        longitude: '',
-        address: ''
+        name: "",
+        contactDetails: "",
+        operatingHours: "",
+        description: "",
+        categories: "",
+        latitude: "",
+        longitude: "",
+        address: "",
       });
     } catch (error) {
-      console.error('Error adding store', error);
+      console.error("Error adding store", error);
     }
   };
 
@@ -137,15 +140,11 @@ const AdminPage = () => {
       </form>
       <h2>All Stores</h2>
       <ul>
-        {stores.map(store => (
-          <li key={store.id}>
-            <h3>{store.name}</h3>
-            <p>{store.contactDetails}</p>
-            <p>{store.operatingHours}</p>
-            <p>{store.description}</p>
-            <p>{store.categories.join(', ')}</p>
-            <p>{store.location.address}</p>
-          </li>
+        {stores.map((store, index) => (
+          <SearchResult 
+          key={index}
+          data={store}
+          />
         ))}
       </ul>
     </div>

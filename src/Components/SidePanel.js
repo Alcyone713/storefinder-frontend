@@ -77,10 +77,10 @@ export default function SidePanel({ list, onClickHandler, userPosition }) {
         />
       </div>
       <div className="searchResults" style={styles.searchresults}>
-        {filteredList.map((restaurant, index) => (
+        {filteredList.map((store, index) => (
           <SearchResult
             key={index}
-            data={restaurant}
+            data={store}
             onClickHandler={onClickHandler}
           />
         ))}
