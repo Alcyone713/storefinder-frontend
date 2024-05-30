@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 
-export default function SearchResult({ data, onClickHandler }) {
+export default function SearchResult({ data, onClickHandler, page }) {
   const handleClick = () => {
     onClickHandler(data.location);
   };
@@ -17,7 +17,7 @@ export default function SearchResult({ data, onClickHandler }) {
       <h2>{data.name}</h2>
       <h3>{data.contact}</h3>
       <div style={styles.buttons}>
-        <h4 onClick={handleClick}>view path</h4>
+        ({page}===1 ? <h4 onClick={handleClick}>view path</h4> : null)
         <button onClick={onOpenModal}>See details</button>
         <Modal open={open} onClose={onCloseModal} center>
           <h2>{data.name}</h2>

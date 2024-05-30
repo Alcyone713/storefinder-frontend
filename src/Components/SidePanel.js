@@ -81,6 +81,7 @@ export default function SidePanel({ list, onClickHandler, userPosition }) {
           <SearchResult
             key={index}
             data={store}
+            page={1}
             onClickHandler={onClickHandler}
           />
         ))}
