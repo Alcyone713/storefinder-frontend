@@ -22,7 +22,7 @@ const LoginSignup = () => {
 
     const handleSignup = async () => {
         try {
-            const user = { username, email, password };
+            const user = { username, email, password, role: 'user' };
             const response = await signupUser(user);
             alert('User registered successfully!');
             setAction('Login');
@@ -36,20 +36,25 @@ const LoginSignup = () => {
         try {
             const loginRequest = { email, password };
             const response = await loginUser(loginRequest);
-            const { token, role } = response;
-
-            localStorage.setItem('token', token);
-
-            if (role === 'admin') {
-                window.location.href = '/admin';
+    
+            if (response && response.token && response.role) {
+                console.log(response);
+                const { token, role } = response;
+                localStorage.setItem('token', token);
+    
+                if (role === 'admin') {
+                    window.location.href = '/admin'; // Replace with your admin page route
+                } else {
+                    window.location.href = '/home'; // Replace with your home page route
+                }
             } else {
-                window.location.href = '/home';
+                throw new Error('Invalid response from the server');
             }
         } catch (error) {
             alert('Invalid email or password.');
             console.error('Error logging in:', error);
-        }
-    };
+        }
+    };
 
     const handleAdminLogin = () => {
         handleLogin();
