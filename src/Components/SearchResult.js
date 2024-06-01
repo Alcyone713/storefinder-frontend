@@ -47,6 +47,7 @@ const styles = {
     marginLeft: '20px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     transition: 'transform 0.3s ease',
+    outline: '2px solid #1C515F',
   },
   title: {
     fontSize: '1.5em',
@@ -68,6 +69,7 @@ const styles = {
     fontSize: '1em',
     color: '#000000',
     cursor: 'pointer',
+    marginLeft: '20px',
   },
   button: {
     padding: '10px 20px',
