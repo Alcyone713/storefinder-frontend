@@ -56,13 +56,15 @@ export default function SidePanel({ list, onClickHandler, userPosition }) {
   };
   const filteredList = filterStores();
 
+  const username = localStorage.getItem('username');
+
   return (
     <div className="sidepanel" style={styles.sidepanel}>
       <div className="navbar" style={styles.navbar}>
         <img src={image} height="50px" style={styles.logo} alt="logo" />
         <h2>Storefinder</h2>
       </div>
-      <Link to="/favourite">View fav stores</Link>
+      <h3>Hi! {username}</h3>
       <div className="search" style={styles.search}>
         <select style={styles.dropdown} onChange={handleCategoryChange} value={searchCategory}>
         <option value="category">Nearest Stores</option>
@@ -78,6 +80,7 @@ export default function SidePanel({ list, onClickHandler, userPosition }) {
           onChange={(handleSearch)}
         />
       </div>
+      <Link to="/favourite" style={styles.favbutton}>View fav stores</Link>
       <div className="searchResults" style={styles.searchresults}>
         {filteredList.map((store, index) => (
           <SearchResult
@@ -143,5 +146,14 @@ const styles = {
     overflowY: 'scroll',
     marginTop: '20px',
     padding: '10px',
+  },
+  favbutton: {
+    padding: '10px 20px',
+    backgroundColor: '#1C515F',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
   }
 };
