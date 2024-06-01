@@ -65,6 +65,7 @@ export default function SidePanel({ list, onClickHandler, userPosition }) {
         <h2>Storefinder</h2>
       </div>
       <h3>Hi! {username}</h3>
+      <Link to="/favourite" style={styles.favbutton}>View fav stores</Link>
       <div className="search" style={styles.search}>
         <select style={styles.dropdown} onChange={handleCategoryChange} value={searchCategory}>
         <option value="category">Nearest Stores</option>
@@ -80,7 +81,7 @@ export default function SidePanel({ list, onClickHandler, userPosition }) {
           onChange={(handleSearch)}
         />
       </div>
-      <Link to="/favourite" style={styles.favbutton}>View fav stores</Link>
+      
       <div className="searchResults" style={styles.searchresults}>
         {filteredList.map((store, index) => (
           <SearchResult
@@ -148,7 +149,9 @@ const styles = {
     padding: '10px',
   },
   favbutton: {
-    padding: '10px 20px',
+    padding: '10px 10px',
+    width: "200px",
+    alignSelf: 'center',
     backgroundColor: '#1C515F',
     color: 'white',
     border: 'none',

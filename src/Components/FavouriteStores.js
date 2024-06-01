@@ -99,11 +99,13 @@ const FavoriteStores = () => {
 const styles = {
   container: {
     padding: "20px",
+    width: "100vw",
   },
   favoritesList: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: 'center',
   },
   storeCard: {
     backgroundColor: "#f8f8f8",
@@ -114,6 +116,7 @@ const styles = {
   },
   button: {
     padding: '10px 20px',
+    margin: '10px',
     backgroundColor: '#000000',
     color: 'white',
     border: 'none',
