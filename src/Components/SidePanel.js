@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import image from "./image.png";
 import SearchResult from "./SearchResult";
 import { fetchNearestStore } from "../Api/storeApi";
+import { Link } from "react-router-dom";
 
 
 export default function SidePanel({ list, onClickHandler, userPosition }) {
@@ -61,6 +62,7 @@ export default function SidePanel({ list, onClickHandler, userPosition }) {
         <img src={image} height="50px" style={styles.logo} alt="logo" />
         <h2>Storefinder</h2>
       </div>
+      <Link to="/favourite">View fav stores</Link>
       <div className="search" style={styles.search}>
         <select style={styles.dropdown} onChange={handleCategoryChange} value={searchCategory}>
         <option value="category">Nearest Stores</option>

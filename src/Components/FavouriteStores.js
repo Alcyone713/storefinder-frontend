@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getFavoriteStores, removeFavoriteStore } from '../Api/userApi'; // Adjust the path to where your API functions are defined
+import { getFavoriteStores, removeFavoriteStore } from '../Api/userApi'; 
+import { fetchStoreById } from '../Api/storeApi';
 
 const FavoriteStores = () => {
   const [favorites, setFavorites] = useState([]);
@@ -9,8 +10,22 @@ const FavoriteStores = () => {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const favoriteStores = await getFavoriteStores(username);
-        setFavorites(favoriteStores);
+        const storeIds = await getFavoriteStores(username);
+        console.log('Store IDs fetched:', storeIds);
+
+        const storesDetails = await Promise.all(
+          storeIds.map(async (storeId) => {
+            try {
+              const storeDetails = await fetchStoreById(storeId);
+              return storeDetails;
+            } catch (error) {
+              console.error(`Error fetching store details for ID ${storeId}:`, error);
+              return null; 
+            }
+          })
+        );
+
+        setFavorites(storesDetails.filter(store => store !== null));
       } catch (error) {
         console.error('Error fetching favorite stores:', error);
       }
@@ -18,6 +33,7 @@ const FavoriteStores = () => {
 
     fetchFavorites();
   }, [username]);
+
 
   const handleRemoveFavorite = async (storeId) => {
     try {
@@ -39,7 +55,6 @@ const FavoriteStores = () => {
             <div key={store.id} style={styles.storeCard}>
               <h2>{store.name}</h2>
               <p>{store.contactDetails}</p>
-              <p>{store.location.address}</p>
               <button style={styles.removeButton} onClick={() => handleRemoveFavorite(store.id)}>Remove from Favorites</button>
             </div>
           ))}
@@ -55,7 +70,8 @@ const styles = {
   },
   favoritesList: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
+
   },
   storeCard: {
     backgroundColor: '#f8f8f8',

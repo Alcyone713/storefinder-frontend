@@ -23,6 +23,16 @@ export const fetchStoreByName = async (name) => {
     }
   };
   
+  export const fetchStoreById = async (id) => {
+    try {
+      const response = await axios.get(`${API_URL}/id/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`There was an error fetching the store with id ${id}!`, error);
+      throw error;
+    }
+  };
+
   // Function to fetch stores by product name
   export const fetchStoresByProductName = async (productName) => {
     try {
