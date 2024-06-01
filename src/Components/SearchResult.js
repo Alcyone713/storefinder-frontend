@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
+import { addFavoriteStore } from '../Api/userApi';
 
 export default function SearchResult({ data, onClickHandler, page }) {
   const handleClick = () => {
@@ -11,6 +12,18 @@ export default function SearchResult({ data, onClickHandler, page }) {
 
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+
+  const username=localStorage.getItem('username');
+
+  const handleAddToFavorites = async () => {
+    try {
+      await addFavoriteStore(username, data.id);
+      alert('Store added to favorites!');
+    } catch (error) {
+      console.error('Error adding store to favorites:', error);
+      alert('Failed to add store to favorites.');
+    }
+  };
 
   return (
     <div style={styles.searchresult}>
@@ -27,6 +40,7 @@ export default function SearchResult({ data, onClickHandler, page }) {
             <p><strong>Description:</strong> {data.description}</p>
             <p><strong>Categories:</strong> {data.categories.join(', ')}</p>
             <p><strong>Address:</strong> {data.location.address}</p>
+            <button style={styles.addToFavoritesButton} onClick={handleAddToFavorites}>Add to Favourites</button>
           </div>
         </Modal>
       </div>
@@ -96,5 +110,14 @@ const styles = {
   modalHours: {
     fontSize: '1.2em',
     marginBottom: '20px',
+  },
+  addToFavoritesButton: {
+    padding: '10px 20px',
+    backgroundColor: '#28a745',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
   },
 };

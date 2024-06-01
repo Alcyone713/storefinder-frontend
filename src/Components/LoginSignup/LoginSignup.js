@@ -39,13 +39,14 @@ const LoginSignup = () => {
     
             if (response && response.token && response.role) {
                 console.log(response);
-                const { token, role } = response;
+                const { token, role, username } = response;
                 localStorage.setItem('token', token);
+                localStorage.setItem('username', username);
     
                 if (role === 'admin') {
-                    window.location.href = '/admin'; // Replace with your admin page route
+                    window.location.href = '/admin';
                 } else {
-                    window.location.href = '/home'; // Replace with your home page route
+                    window.location.href = '/home';
                 }
             } else {
                 throw new Error('Invalid response from the server');
