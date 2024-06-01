@@ -38,7 +38,7 @@ const styles = {
   searchresult: {
     width: '20vw',
     height: 'auto',
-    backgroundColor: '#ebebeb',
+    backgroundColor: '#ffff',
     marginTop: '20px',
     borderRadius: '10px',
     padding: '20px',
@@ -66,12 +66,12 @@ const styles = {
   },
   viewPath: {
     fontSize: '1em',
-    color: '#007BFF',
+    color: '#000000',
     cursor: 'pointer',
   },
   button: {
     padding: '10px 20px',
-    backgroundColor: '#007BFF',
+    backgroundColor: '#000000',
     color: 'white',
     border: 'none',
     borderRadius: '5px',

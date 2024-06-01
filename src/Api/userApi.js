@@ -24,35 +24,67 @@ export const updateUser = async (id, userDetails) => {
     }
   };
   
-  // Function to fetch favorite stores for a user
-  export const getFavoriteStores = async (id) => {
+  // // Function to fetch favorite stores for a user
+  // export const getFavoriteStores = async (id) => {
+  //   try {
+  //     const response = await axios.get(`${API_URL}/${id}/fav_stores`);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error(`There was an error fetching favorite stores for user with ID ${id}!`, error);
+  //     throw error;
+  //   }
+  // };
+  
+  // // Function to add a favorite store for a user
+  // export const addFavoriteStore = async (id, storeId) => {
+  //   try {
+  //     const response = await axios.post(`${API_URL}/${id}/fav_stores`, { storeId });
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error(`There was an error adding favorite store with ID ${storeId} for user with ID ${id}!`, error);
+  //     throw error;
+  //   }
+  // };
+  
+  // // Function to remove a favorite store for a user
+  // export const removeFavoriteStore = async (id, storeId) => {
+  //   try {
+  //     const response = await axios.delete(`${API_URL}/${id}/fav_stores/${storeId}`);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error(`There was an error removing favorite store with ID ${storeId} for user with ID ${id}!`, error);
+  //     throw error;
+  //   }
+  // };
+
+  export const getFavoriteStores = async (username) => {
     try {
-      const response = await axios.get(`${API_URL}/${id}/fav_stores`);
+      const response = await axios.get(`${API_URL}/${username}/fav_stores`);
       return response.data;
     } catch (error) {
-      console.error(`There was an error fetching favorite stores for user with ID ${id}!`, error);
+      console.error(`There was an error fetching favorite stores for user with username ${username}!`, error);
       throw error;
     }
   };
   
   // Function to add a favorite store for a user
-  export const addFavoriteStore = async (id, storeId) => {
+  export const addFavoriteStore = async (username, storeId) => {
     try {
-      const response = await axios.post(`${API_URL}/${id}/fav_stores`, { storeId });
+      const response = await axios.post(`${API_URL}/${username}/fav_stores`, { storeId });
       return response.data;
     } catch (error) {
-      console.error(`There was an error adding favorite store with ID ${storeId} for user with ID ${id}!`, error);
+      console.error(`There was an error adding favorite store with ID ${storeId} for user with username ${username}!`, error);
       throw error;
     }
   };
   
   // Function to remove a favorite store for a user
-  export const removeFavoriteStore = async (id, storeId) => {
+  export const removeFavoriteStore = async (username, storeId) => {
     try {
-      const response = await axios.delete(`${API_URL}/${id}/fav_stores/${storeId}`);
+      const response = await axios.delete(`${API_URL}/${username}/fav_stores/${storeId}`);
       return response.data;
     } catch (error) {
-      console.error(`There was an error removing favorite store with ID ${storeId} for user with ID ${id}!`, error);
+      console.error(`There was an error removing favorite store with ID ${storeId} for user with username ${username}!`, error);
       throw error;
     }
   };
