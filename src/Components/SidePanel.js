@@ -72,6 +72,7 @@ export default function SidePanel({ list, onClickHandler, userPosition }) {
         <img src={image} height="50px" style={styles.logo} alt="logo" />
         <h2>Storefinder</h2>
         <svg
+          style={styles.logout}
           xmlns="http://www.w3.org/2000/svg"
           width="1em"
           height="1em"
@@ -130,6 +131,11 @@ const styles = {
     borderRadius: "5px",
     backgroundColor: "#fff",
     fontSize: "16px",
+  },
+  logout: {
+    marginLeft: "150px",
+    width: '2em', 
+    height: '2em',
   },
   searchInput: {
     flex: 1,

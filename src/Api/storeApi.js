@@ -89,3 +89,13 @@ export const deleteStoreById = async (id) => {
       throw error;
     }
   };
+
+  export const fetchStoreReviews = async (id) => {
+    try {
+      const response = await axios.get(`${API_URL}/${id}/reviews`);
+      return response.data;
+    } catch (error) {
+      console.error(`There was an error fetching reviews for store ID ${id}!`, error);
+      throw error;
+    }
+  };
