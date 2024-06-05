@@ -58,8 +58,6 @@ export default function SidePanel({ list, onClickHandler, userPosition }) {
 
   const username = localStorage.getItem('username');
 
-  handleLogout
-
   return (
     <div className="sidepanel" style={styles.sidepanel}>
       <div className="navbar" style={styles.navbar}>

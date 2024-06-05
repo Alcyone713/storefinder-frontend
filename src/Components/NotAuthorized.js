@@ -17,6 +17,7 @@ const styles = {
     justifyContent: 'center',
     height: '100vh',
     textAlign: 'center',
+    width:'100vw',
   },
   heading: {
     fontSize: '2rem',
