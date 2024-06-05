@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchStores, addStore } from '../Api/storeApi'; // Adjust the import path based on your project structure
+import { fetchStores, addStore, deleteStoreById } from '../Api/storeApi'; // Adjust the import path based on your project structure
 import SearchResult from './SearchResult';
 
 const AdminPage = () => {
@@ -27,6 +27,15 @@ const AdminPage = () => {
 
     loadStores();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteStoreById(id);
+      setStores(stores.filter(store => store.id !== id));
+    } catch (error) {
+      console.error('Error deleting store:', error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -152,7 +161,7 @@ const AdminPage = () => {
         <h2>All Stores</h2>
         <ul style={styles.storeList}>
           {stores.map((store, index) => (
-            <SearchResult key={index} data={store} page={2}/>
+            <SearchResult key={index} data={store} page={2} handleDelete={()=>handleDelete(store.id)}/>
           ))}
         </ul>
       </div>

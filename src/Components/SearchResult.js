@@ -3,7 +3,7 @@ import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 import { addFavoriteStore } from '../Api/userApi';
 
-export default function SearchResult({ data, onClickHandler, page }) {
+export default function SearchResult({ data, onClickHandler, page, handleDelete }) {
   const handleClick = () => {
     onClickHandler(data.location);
   };
@@ -30,7 +30,7 @@ export default function SearchResult({ data, onClickHandler, page }) {
       <h2 style={styles.title}>{data.name}</h2>
       <h3 style={styles.contact}>{data.contactDetails}</h3>
       <div style={styles.buttons}>
-        {page === 1 ? <h4 style={styles.viewPath} onClick={handleClick}>View Path</h4> : null}
+        {page === 1 ? <h4 style={styles.viewPath} onClick={handleClick}>View Path</h4> : <h4 style={styles.removeBtn} onClick={()=>handleDelete(data.id)}>Remove Store</h4>}
         <button style={styles.button} onClick={onOpenModal}>See Details</button>
         <Modal open={open} onClose={onCloseModal} center>
           <div style={styles.modalContent}>
@@ -88,6 +88,15 @@ const styles = {
   button: {
     padding: '10px 20px',
     backgroundColor: '#000000',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+  },
+  removeBtn:{
+    padding: '10px 20px',
+    backgroundColor: '#D11A2A',
     color: 'white',
     border: 'none',
     borderRadius: '5px',
