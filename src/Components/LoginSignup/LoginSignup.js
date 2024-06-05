@@ -42,6 +42,7 @@ const LoginSignup = () => {
                 const { token, role, username } = response;
                 localStorage.setItem('token', token);
                 localStorage.setItem('username', username);
+                localStorage.setItem('role', role);
     
                 if (role === 'admin') {
                     window.location.href = '/admin';
