@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from 'react-responsive-modal';
 import 'react-responsive-modal/styles.css';
 import { addFavoriteStore } from '../Api/userApi';
+import { fetchStoreReviews } from '../Api/storeApi';
 
 export default function SearchResult({ data, onClickHandler, page, handleDelete }) {
   const handleClick = () => {
@@ -9,8 +10,17 @@ export default function SearchResult({ data, onClickHandler, page, handleDelete 
   };
   
   const [open, setOpen] = useState(false);
+  const [reviews, setReviews] = useState([]);
 
-  const onOpenModal = () => setOpen(true);
+  const onOpenModal = async () => {
+    setOpen(true);
+    try {
+      const fetchedReviews = await fetchStoreReviews(data.id);
+      setReviews(fetchedReviews);
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    }
+  };
   const onCloseModal = () => setOpen(false);
 
   const username=localStorage.getItem('username');
@@ -40,6 +50,17 @@ export default function SearchResult({ data, onClickHandler, page, handleDelete 
             <p><strong>Description:</strong> {data.description}</p>
             <p><strong>Categories:</strong> {data.categories.join(', ')}</p>
             <p><strong>Address:</strong> {data.location.address}</p>
+            {reviews.length > 0 && (
+              <div style={styles.reviewsContainer}>
+                <h3>Reviews:</h3>
+                {reviews.map((review, index) => (
+                  <div key={index} style={styles.review}>
+                    <p><strong>{review.userId}</strong></p>
+                    <p>{review.rating} {review.review}</p>
+                  </div>
+                ))}
+              </div>
+            )}
             <button style={styles.addToFavoritesButton} onClick={handleAddToFavorites}>Add to Favourites</button>
           </div>
         </Modal>
@@ -130,5 +151,15 @@ const styles = {
     borderRadius: '5px',
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
+  },
+  reviewsContainer: {
+    marginTop: '20px',
+    marginBottom: '20px',
+  },
+  review: {
+    padding: '10px',
+    borderRadius: '5px',
+    backgroundColor: '#f9f9f9',
+    marginBottom: '10px',
   },
 };
