@@ -33,6 +33,17 @@ export const fetchStoreByName = async (name) => {
     }
   };
 
+  // Function to delete a store by id
+export const deleteStoreById = async (id) => {
+  try {
+    const response = await axios.delete(`${API_URL}/id/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`There was an error deleting the store with id ${id}!`, error);
+    throw error;
+  }
+};
+
   // Function to fetch stores by product name
   export const fetchStoresByProductName = async (productName) => {
     try {
